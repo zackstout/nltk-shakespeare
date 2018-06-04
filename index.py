@@ -1,7 +1,7 @@
 
 import nltk # Interesting, if you run this with python instead of python3, it can't find nltk.
 import pandas as pd
-
+from nltk import FreqDist
 
 # nltk.download()
 
