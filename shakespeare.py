@@ -3,6 +3,7 @@ import nltk # Interesting, if you run this with python instead of python3, it ca
 import pandas as pd
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk import FreqDist
+from csvs import allCsvs
 
 # Bringing in a Shakespeare play to play with:
 # csv = 'Macbeth'
@@ -44,69 +45,28 @@ from nltk import FreqDist
 
 
 
+# Question: are `sorted` and `set` python things, or nltk things?
 
 # Find words that are unique across all the plays:
+def getUniqueWords():
+    raw_text_all = ''
 
-allCsvs = [
-'AllsWellThatEndsWell',
-'AntonyandCleopatra',
-'AsYouLikeIt',
-'ComedyofErrors',
-'Coriolanus',
-'Cymbeline',
-'Hamlet',
-'HenryIV,part1',
-'HenryIV,part2',
-'HenryV',
-'HenryVI,part1',
-'HenryVI,part2',
-'HenryVIII',
-'JuliusCaesar',
-'KingJohn',
-'KingLear',
-'LovesLaboursLost',
-'Macbeth',
-'MeasureforMeasure',
-'MerchantofVenice',
-'MerryWivesofWindsor',
-'MidsummerNightsDream',
-'MuchAdoAboutNothing',
-'Othello',
-'Pericles',
-'RichardII',
-'RichardIII',
-'RomeoandJuliet',
-'TamingoftheShrew',
-'TheTempest',
-'TimonofAthens',
-'TitusAndronicus',
-'TroilesandCressida',
-'TwelfthNight',
-'TwoGentlemenofVerona',
-'WintersTale'
-]
+    for csv in allCsvs:
+        filename = 'csvs/' + csv + '.csv'
+        df = pd.read_csv(filename, index_col=0)
+        for line in df['Lines']:
+            raw_text_all += line + '\n'
 
-raw_text_all = ''
+    tokens = word_tokenize(raw_text_all)
+    text = nltk.Text(tokens)
+    # text.collocations()
 
-for csv in allCsvs:
-    filename = 'csvs/' + csv + '.csv'
-    df = pd.read_csv(filename, index_col=0)
-    for line in df['Lines']:
-        raw_text_all += line + '\n'
+    fdist = FreqDist(text)
+    unique = fdist.hapaxes()
+    sort_unique = sorted(unique)
+    print(sort_unique)
 
-tokens = word_tokenize(raw_text_all)
-text = nltk.Text(tokens)
-
-
-fdist = FreqDist(text)
-# print(sorted(fdist.hapaxes())
-
-# text.collocations()
-
-unique = fdist.hapaxes()
-sort_unique = sorted(unique)
-print(sort_unique)
-
+# getUniqueWords()
 
 
 
