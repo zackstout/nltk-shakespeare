@@ -124,6 +124,10 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 # All of this is so great, one only needs a touch of imagination to build some interesting and useful queries.
 
 
+# STEMMERS
+#
+# Regex
+#
 
 
 
