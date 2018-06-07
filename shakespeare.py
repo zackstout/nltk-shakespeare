@@ -5,6 +5,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk import FreqDist
 from csvs import allCsvs
 from nltk.corpus import wordnet as wn
+from collections import Counter
 
 # Bringing in a Shakespeare play to play with:
 def onePlay(play):
@@ -22,25 +23,36 @@ def onePlay(play):
     tokens = word_tokenize(raw_text)
     text = nltk.Text(tokens)
     # text.concordance('strange')
-    text.similar('strange')
+    # text.similar('strange')
     # text.collocations()
-    # text.dispersion_plot(['strange', 'hate', 'blood'])
+    # text.dispersion_plot(['blood'])
     #
     # richness = len(set(text)) / len(text)
     # print(richness)
     #
     # print(text.count('strange'))
     #
-    # fdist = FreqDist(text)
+    fdist = FreqDist(text)
     # print(fdist.most_common(50))
     # print(fdist['strange'])
     #
     # print(fdist.hapaxes())
+    tagged_text = nltk.pos_tag(tokens)
+    print(tagged_text[:50])
+    counts = Counter(tag for word,tag in tagged_text)
+    print(counts)
 
 
 
-# onePlay('Macbeth')
+onePlay('Macbeth')
 
+
+def synsetsFun():
+    syn = wn.synsets('animal')
+    for synset in syn:
+        print(synset.name(), '\n', synset.hyponyms(), '\n', synset.hypernyms())
+
+# synsetsFun()
 
 
 def playWithWordNet(word):
@@ -83,7 +95,7 @@ def playWithWordNet(word):
 
 
 
-playWithWordNet('strange')
+# playWithWordNet('strange')
 
 
 
